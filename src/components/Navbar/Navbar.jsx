@@ -3,14 +3,14 @@ import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function Navbar( {isTopPanelVisible} ) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const isLargeScreen = useMediaQuery('(min-width:900px)'); // Detect screen size
 
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
+  const toggleDrawer = (open) => () => {
+    
     setDrawerOpen(open);
   };
 
@@ -33,36 +33,42 @@ function Navbar( {isTopPanelVisible} ) {
         <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
           F J Accounting & Consultancy
         </Typography>
-        <div className="desktop-menu">
-          {menuItems.map((item, index) => (
-            <Button
-            key={index}
+
+
+        {/* Show navbar items only on large screens */}
+        {isLargeScreen ? (
+            <div style={{ display: 'flex', gap: '1rem' }}>
+            {['Home', 'About Us', 'Services', 'Contact'].map((item) => (
+              <Typography
+                key={item}
+                variant="body1"
+                component="a"
+                href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                sx={{
+                  cursor: 'pointer',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                  '&:hover': {
+                    color: 'primary.main',
+                  },
+                }}
+              >
+                {item}
+              </Typography>
+            ))}
+          </div>
+        ) : (
+          // Show Hamburger icon on smaller screens
+          <IconButton
+            edge="end"
             color="inherit"
-            component={Link}
-            to={item.link}
-            sx={{
-              mx: 1,
-              '&:hover': {
-                backgroundColor: 'secondary.main',
-                color: 'white',
-                transition: 'all 0.3s ease-in-out',
-              },
-            }}
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
           >
-            {item.text}
-          </Button>
-          
-          ))}
-        </div>
-        <IconButton
-          edge="end"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-          sx={{ display: { xs: 'flex', md: 'none' } }}
-        >
-          <MenuIcon />
-        </IconButton>
+            <MenuIcon />
+          </IconButton>
+        )}
+       
       </Toolbar>
 
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
