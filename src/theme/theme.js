@@ -3,13 +3,13 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#003366', // CA dark blue color
+      main: '#023C6C', // CA dark blue color
     },
     secondary: {
-      main: '#FFA500', // Contrast color (e.g., for buttons or highlights)
+      main: '#66AC4C', // CA green color
     },
     background: {
-      default: '#f4f6f8', // Light background for a corporate feel
+      default: '#f4f6f8', // Light background
     },
   },
   typography: {

@@ -8,17 +8,12 @@ import Services from './pages/Services/Services';
 import Contact from './pages/Contact/Contact';
 
 function App() {
-
   const [showTopPanel, setShowTopPanel] = useState(true);
   let lastScrollY = window.scrollY;
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setShowTopPanel(false); // Hide top panel on scroll down
-      } else {
-        setShowTopPanel(true);  // Show top panel on scroll up
-      }
+      setShowTopPanel(window.scrollY < lastScrollY);
       lastScrollY = window.scrollY;
     };
 
@@ -30,9 +25,7 @@ function App() {
 
   return (
     <Router>
-       {/* TopPanel will slide based on scroll direction */}
       <TopPanel isVisible={showTopPanel} />
-       {/* Navbar position depends on showTopPanel state */}
       <Navbar isTopPanelVisible={showTopPanel} />
       <Routes>
         <Route path="/" element={<Home />} />
