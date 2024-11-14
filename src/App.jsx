@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Services from './pages/Services/Services';
 import Contact from './pages/Contact/Contact';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [showTopPanel, setShowTopPanel] = useState(true);
@@ -33,6 +34,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
